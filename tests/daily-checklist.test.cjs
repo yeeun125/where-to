@@ -1,0 +1,4 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const src=fs.readFileSync('dist/app.js','utf8');let id=0;const trips=[{start:'2026-10-12'},{start:'2026-10-12'}];let active=0;
+const c={Date,mode:'travel',day:0,trip:()=>trips[active],data:{checks:[{id:'whole',name:'Passport',done:true}]},uid:()=>String(++id),save(){}};vm.createContext(c);vm.runInContext(src.slice(src.indexOf('function checklistDate'),src.indexOf('function checkView')),c);
+const get=()=>vm.runInContext('activeChecks()',c);get()[0].done=true;get().push({id:'custom',name:'Umbrella',done:false});c.day=1;assert.equal(get()[0].done,false);assert.equal(get().length,4);c.day=0;assert.equal(get()[0].done,true);assert.equal(get().length,5);active=1;assert.equal(get()[0].done,false);c.mode='planning';assert.equal(get()[0].id,'whole');assert.equal(get().length,1);console.log('Daily checklist dates, trips and whole-trip isolation passed');
