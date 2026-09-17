@@ -18,10 +18,29 @@ An English/Korean travel companion for planning a trip and following it on the g
 - Generate suggested itineraries within a start/end time, including nearby sights, restaurants and cafés when place data is available. Preview changes before applying them.
 - Discover destination-specific routes and use a separate Travel mode to follow the day's stops.
 - View maps and open external directions. Google Maps is supported overseas and NAVER Maps in Korea; the default is an OpenStreetMap preview.
-- Listen to sourced English/Korean stories for supported places using browser speech synthesis.
-- Use packing checklists and a trip expense ledger. Planned stop budgets and actual expenses remain separate, with totals grouped by currency.
-- Check weather for the destination, current location or a chosen city; convert currencies and hear phrasebook pronunciation.
+- In Travel mode, listen to 10 sourced English/Korean place stories, with chapter playback, nearby suggestions and a full story library. Chapter counts vary with the content; Audio & stories is hidden in Planning mode.
+- Planning mode keeps the whole-trip packing list. Travel mode has a separate day-bag checklist for each date and trip, with editable items and independently saved checkmarks.
+- Use a trip expense ledger linked to manually entered itinerary budgets. Planned budgets and actual expenses remain separate, with totals grouped by currency.
+- Travel tools puts weather and local time in the top row, with currency conversion and the phrasebook below; cards stack on phones. App language remains at the top.
+- Check weather for the destination, current location or a chosen city, choose either currency, and select a phrasebook language independently. Pronunciation prefers installed voices and retries alternatives when playback fails; a Google Translate link includes the selected phrase.
 - Complete and restore trips, and export trip data as JSON.
+
+## Planning and Travel modes
+
+| | Planning mode | Travel mode |
+| --- | --- | --- |
+| Main screen | Build and edit the itinerary | Follow the selected day and stop |
+| Checklist | Whole-trip preparation | Day bag saved by trip and calendar date |
+| Audio & stories | Hidden | Available in navigation and travel shortcuts |
+| Travel tools and ledger | Available | Available |
+
+Daily checklist defaults include a phone and charged power bank, wallet and transport card, water bottle, and that day’s tickets and reservations. Add or remove items to suit the day. These are basic suggestions, not weather-aware or AI-generated packing advice. The existing whole-trip checklist is currently shared across trips in the same browser; daily checklists are trip-specific.
+
+## Audio stories
+
+The current library covers Gyeongbokgung Palace, Bukchon Hanok Village, Seoul Forest, the Louvre, Musée d’Orsay, Eiffel Tower, Tuileries Garden, Notre-Dame, Montmartre and the Tower of London. Each story has English and Korean text and source links. Nearby suggestions use geographic distance; the full library is also browsable.
+
+Stories are curated content, not live AI-generated explanations of arbitrary nearby places. Narration and phrase pronunciation use the device’s speech engine. Available voices and audible output depend on the browser and installed voices; playback events alone cannot confirm that the listener heard sound. ElevenLabs is not connected and has been deferred.
 
 ## Run locally
 
@@ -37,6 +56,7 @@ Open http://localhost:5173 in your browser. Use an HTTP server rather than openi
 
 ```text
 dist/
+  hoppi-bunny.png      Bunny mascot and favicon
   index.html          App entry point
   app.js              Trip state, screens and interactions
   style.css           Responsive styles
@@ -62,6 +82,9 @@ node tests/ledger.test.cjs
 node tests/completed-trips.test.cjs
 node tests/city-search.test.cjs
 node tests/multi-destination.test.cjs
+node tests/pronunciation.test.cjs
+node tests/stories.test.cjs
+node tests/daily-checklist.test.cjs
 ```
 
 ## Deploy
@@ -96,3 +119,7 @@ Automatic planning uses geographic proximity and available place data, not verif
 - Paris photograph: Wolfgang Moroder / Wikimedia Commons, CC BY 2.5, cropped; attribution is included in the app.
 
 Review provider terms and commercial-use requirements before a commercial launch.
+
+## Development workflow
+
+Work on a `codex/<change-name>` branch, update the README when behavior changes, and run the relevant checks before opening a pull request. Merge reviewed changes into `main` when ready. Production deployment is a separate manual Netlify upload until Git-based deployment is configured.
