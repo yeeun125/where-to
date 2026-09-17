@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const source=fs.readFileSync('dist/utilities.js','utf8');
+const status={isConnected:true,textContent:''};let spoken,timer,resumed=0;
+const synth={getVoices:()=>[{lang:'ja_JP'}],cancel(){},resume(){resumed++},speak(u){spoken=u}};
+const context={window:{speechSynthesis:synth,SpeechSynthesisUtterance:function(){},AppI18n:{locale:'en'}},SpeechSynthesisUtterance:function(text){this.text=text},$:()=>status,languages:{ja:{voice:'ja-JP',phrases:['こんにちは。']}},targetLanguage:()=> 'ja',settings:{phrase:0},setTimeout:f=>(timer=f,1),clearTimeout(){}};
+vm.createContext(context);vm.runInContext(source.slice(source.indexOf('let pronunciation=null'),source.indexOf('\ndocument.',source.indexOf('function pronounce(){')+1)),context);
+vm.runInContext('pronounce()',context);assert.equal(spoken.voice.lang,'ja_JP');assert.equal(spoken.volume,1);assert.equal(resumed,1);spoken.onstart();assert.match(status.textContent,/Playing/);spoken.onend();assert.match(status.textContent,/again/);
+vm.runInContext('pronounce()',context);timer();assert.match(status.textContent,/did not start/);
+vm.runInContext('pronounce();stopPronunciation()',context);assert.equal(spoken.onstart,null);
+console.log('Pronunciation voice matching, resume, completion, timeout and stop passed');

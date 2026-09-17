@@ -29,3 +29,9 @@
 .sidebar .side-note{background:#204f45;border-color:#477166;color:#d0e2d7}.sidebar .side-note b{color:#e0efbd}.sidebar .side-note button{color:#fff}
 .sidebar button:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
 @media(max-width:720px){.topbar:before{background-size:36px 42px;padding-left:41px}}
+
+/* Travel tools: daily context first, practical helpers below. */
+.tool-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"weather time" "currency phrases";gap:24px;align-items:stretch}
+.utility-weather{grid-area:weather}.utility-time{grid-area:time}.utility-currency{grid-area:currency}.utility-phrases{grid-area:phrases}
+.tool-grid>.panel{min-width:0;padding:26px}.tool-grid h3{margin-top:0;margin-bottom:22px}.tool-grid .utility-label{display:block;margin-top:18px}.tool-grid input,.tool-grid select{width:100%;min-width:0}.tool-grid .weather-choice{flex-wrap:wrap}.utility-time .big-number{font-size:clamp(36px,4vw,56px);margin:28px 0 12px}.utility-time #seoul-time{padding-top:18px;border-top:1px solid var(--line)}
+@media(max-width:720px){.tool-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"weather" "time" "currency" "phrases";gap:16px}.tool-grid>.panel{padding:22px}}
