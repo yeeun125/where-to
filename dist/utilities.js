@@ -41,7 +41,7 @@ const audioMessage=(en,ko)=>window.AppI18n?.locale==='ko'?ko:en;
 function stopPronunciation(){const old=pronunciation;pronunciation=null;clearTimeout(pronunciationTimer);if(old){old.onend=null;old.onerror=null;old.onstart=null}window.speechSynthesis?.cancel()}
 // Request the voice list early; some browsers populate it asynchronously.
 window.speechSynthesis?.getVoices();
-function pronounce(){
+function pronounce(attempt=0){
  const status=$('#pronunciation-status'),synth=window.speechSynthesis;
  stopPronunciation();
  const fail=()=>{if(status.isConnected)status.textContent=audioMessage('Audio did not start. Check media volume, or open this page in Safari or Chrome. You can also hear this phrase in Google Translate below.','음성이 재생되지 않았어요. 미디어 음량을 확인하거나 Safari·Chrome에서 열어 주세요. 아래 Google 번역에서도 이 문장의 발음을 들을 수 있어요.')};
@@ -49,13 +49,15 @@ function pronounce(){
  const lang=languages[targetLanguage()],u=new SpeechSynthesisUtterance(lang.phrases[Number(settings.phrase)||0]);
  pronunciation=u;u.lang=lang.voice;u.rate=.85;u.volume=1;
  const norm=s=>s.toLowerCase().replace(/_/g,'-'),voices=synth.getVoices();
- const voice=voices.find(v=>norm(v.lang)===norm(lang.voice))||voices.find(v=>norm(v.lang).split('-')[0]===targetLanguage());
- if(voice)u.voice=voice;
+ const candidates=voices.filter(v=>norm(v.lang).split('-')[0]===targetLanguage()).sort((a,b)=>Number(b.localService)-Number(a.localService)||Number(norm(b.lang)===norm(lang.voice))-Number(norm(a.lang)===norm(lang.voice)));
+ const voice=candidates[attempt];
+ if(voice){u.voice=voice;u.lang=voice.lang.replace(/_/g,'-')}
+ const retry=()=>{if(pronunciation!==u)return;stopPronunciation();if(attempt+1<candidates.length&&attempt<2)pronounce(attempt+1);else fail()};
  status.textContent=audioMessage('Starting audio…','음성 재생 준비 중…');
  u.onstart=()=>{if(pronunciation!==u)return;clearTimeout(pronunciationTimer);if(status.isConnected)status.textContent=audioMessage('Playing pronunciation…','발음을 재생하고 있어요…')};
  u.onend=()=>{if(pronunciation!==u)return;pronunciation=null;clearTimeout(pronunciationTimer);if(status.isConnected)status.textContent=audioMessage('Listen again whenever you like.','다시 듣고 싶으면 듣기를 눌러 주세요.')};
- u.onerror=()=>{if(pronunciation!==u)return;stopPronunciation();fail()};
- pronunciationTimer=setTimeout(()=>{if(pronunciation===u){stopPronunciation();fail()}},6000);
+ u.onerror=retry;
+ pronunciationTimer=setTimeout(()=>{if(pronunciation===u)retry()},6000);
  try{synth.resume();synth.speak(u)}catch{stopPronunciation();fail()}
 }
 document.addEventListener('change',e=>{const id=e.target.id;if(id==='currency-from'){settings.from=e.target.value;updateCurrency()}if(id==='currency-to'){settings.to=e.target.value;updateCurrency()}if(id==='currency-mode'){settings.rateMode=e.target.value;$('#manual-rate-label').classList.toggle('hide',settings.rateMode!=='manual');updateCurrency()}if(id==='phrase-language'){settings.language=e.target.value;updatePhrase()}if(id==='travel-phrase'){settings.phrase=Number(e.target.value);updatePhrase()}});

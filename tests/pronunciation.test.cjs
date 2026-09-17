@@ -8,3 +8,7 @@ vm.runInContext('pronounce()',context);assert.equal(spoken.voice.lang,'ja_JP');a
 vm.runInContext('pronounce()',context);timer();assert.match(status.textContent,/did not start/);
 vm.runInContext('pronounce();stopPronunciation()',context);assert.equal(spoken.onstart,null);
 console.log('Pronunciation voice matching, resume, completion, timeout and stop passed');
+context.languages.fr={voice:'fr-FR',phrases:['Bonjour !']};context.targetLanguage=()=> 'fr';
+synth.getVoices=()=>[{lang:'fr-FR',name:'Remote',localService:false},{lang:'fr_FR',name:'Local',localService:true},{lang:'fr-CA',name:'Backup',localService:true}];
+vm.runInContext('pronounce()',context);assert.equal(spoken.voice.name,'Local');assert.equal(spoken.lang,'fr-FR');spoken.onerror();assert.equal(spoken.voice.name,'Backup');spoken.onerror();assert.equal(spoken.voice.name,'Remote');spoken.onerror();assert.match(status.textContent,/did not start/);
+console.log('French local voice preference and bounded fallback passed');

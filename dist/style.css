@@ -35,3 +35,5 @@
 .utility-weather{grid-area:weather}.utility-time{grid-area:time}.utility-currency{grid-area:currency}.utility-phrases{grid-area:phrases}
 .tool-grid>.panel{min-width:0;padding:26px}.tool-grid h3{margin-top:0;margin-bottom:22px}.tool-grid .utility-label{display:block;margin-top:18px}.tool-grid input,.tool-grid select{width:100%;min-width:0}.tool-grid .weather-choice{flex-wrap:wrap}.utility-time .big-number{font-size:clamp(36px,4vw,56px);margin:28px 0 12px}.utility-time #seoul-time{padding-top:18px;border-top:1px solid var(--line)}
 @media(max-width:720px){.tool-grid{grid-template-columns:minmax(0,1fr);grid-template-areas:"weather" "time" "currency" "phrases";gap:16px}.tool-grid>.panel{padding:22px}}
+
+.bottom-cards{grid-template-columns:repeat(2,minmax(0,1fr))}@media(max-width:720px){.bottom-cards{grid-template-columns:1fr}.bottom-cards .mini:last-child{display:flex}}
