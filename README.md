@@ -1,6 +1,10 @@
-# where to
+# Hoppi
 
-Built from a month of traveling across Europe, **where to** brings together the tools I wished I had in one place: planning each day, finding my way, tracking spending, and understanding the places I visited.
+<img src="dist/hoppi.svg" alt="Hoppi bunny logo" width="88">
+
+*A little planning. A lot to look forward to.*
+
+Built from a month of traveling across Europe, **Hoppi** brings together the tools I wished I had in one place: planning each day, finding my way, tracking spending, and understanding the places I visited.
 
 An English/Korean travel companion for planning a trip and following it on the go. Built with plain HTML, CSS and JavaScript, with responsive layouts for phones and laptops.
 
