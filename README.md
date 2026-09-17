@@ -1,6 +1,6 @@
 # Hoppi
 
-<img src="dist/hoppi.svg" alt="Hoppi bunny logo" width="88">
+<img src="dist/hoppi-bunny.png" alt="Hoppi bunny logo" width="88">
 
 *A little planning. A lot to look forward to.*
 

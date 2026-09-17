@@ -17,4 +17,15 @@
 .day-tabs .day-tab small{display:block;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;margin-top:5px}.day-destination{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line)}
 
 /* Hoppi bunny identity */
-.brand{gap:9px;letter-spacing:-1px}.brand img{display:block;object-fit:contain}.brand{font-weight:800}.subbrand{margin-left:51px}@media(max-width:720px){.topbar:before{background:url("hoppi.svg") no-repeat left center;background-size:32px 38px;padding-left:37px;line-height:42px;letter-spacing:-.7px}}
+.brand{gap:9px;letter-spacing:-1px}.brand img{display:block;object-fit:contain}.brand{font-weight:800}.subbrand{margin-left:51px}@media(max-width:720px){.topbar:before{background:url("hoppi-bunny.png") no-repeat left center;background-size:32px 38px;padding-left:37px;line-height:42px;letter-spacing:-.7px}}
+
+/* Forest-green navigation with high-contrast states. */
+.sidebar{background:var(--green);color:#fff;border-right-color:#184c42}
+.sidebar .brand{color:#fff}.sidebar .brand img{width:58px;height:64px}.sidebar .subbrand{color:#c3dbce;margin-left:67px}
+.sidebar .nav-label{color:#c3dbce}.sidebar .nav button,.sidebar .side-trip button{color:#f8fbf6}
+.sidebar .nav button:hover,.sidebar .side-trip button:hover{background:#2b6055;color:#fff}
+.sidebar .nav button.active{background:var(--lime);color:#184c42;font-weight:700}
+.sidebar .side-trip{border-top-color:#477166}.sidebar .side-trip button.chosen{background:#306659;color:#fff;box-shadow:inset 3px 0 0 var(--lime)}
+.sidebar .side-note{background:#204f45;border-color:#477166;color:#d0e2d7}.sidebar .side-note b{color:#e0efbd}.sidebar .side-note button{color:#fff}
+.sidebar button:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+@media(max-width:720px){.topbar:before{background-size:36px 42px;padding-left:41px}}
